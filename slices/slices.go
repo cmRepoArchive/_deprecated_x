@@ -1,5 +1,1 @@
 package slices
-
-func Remove() {
-
-}
