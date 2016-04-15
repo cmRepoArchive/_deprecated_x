@@ -1,9 +1,9 @@
-package remove
+package slices
 
-type Interface interface {
+type RemoveInterface interface {
 	Len() int
 	Match(a int, comp interface{}) bool
-	Remove(toRemove interface{}) Interface
+	Remove(toRemove interface{}) RemoveInterface
 }
 
 type IntSlice []int
@@ -13,7 +13,7 @@ func (s IntSlice) Match(a int, comp interface{}) bool {
 	c := comp.(int)
 	return s[a] == c
 }
-func (s IntSlice) Remove(toRemove interface{}) Interface {
+func (s IntSlice) Remove(toRemove interface{}) RemoveInterface {
 	t := toRemove.([]int)
 	if len(t) > 0 {
 		r := s[:0]
@@ -30,14 +30,14 @@ func (s IntSlice) Remove(toRemove interface{}) Interface {
 	return s
 }
 
-type Float64Slice []Float64
+type Float64Slice []float64
 
 func (s Float64Slice) Len() int { return len(s) }
 func (s Float64Slice) Match(a int, comp interface{}) bool {
-	c := comp.(Float64)
+	c := comp.(float64)
 	return s[a] == c
 }
-func (s Float64Slice) Remove(toRemove interface{}) Interface {
+func (s Float64Slice) Remove(toRemove interface{}) RemoveInterface {
 	t := toRemove.([]int)
 	if len(t) > 0 {
 		r := s[:0]
@@ -61,7 +61,7 @@ func (s StringSlice) Match(a int, comp interface{}) bool {
 	c := comp.(string)
 	return s[a] == c
 }
-func (s StringSlice) Remove(toRemove interface{}) Interface {
+func (s StringSlice) Remove(toRemove interface{}) RemoveInterface {
 	t := toRemove.([]int)
 	if len(t) > 0 {
 		r := s[:0]
@@ -78,7 +78,7 @@ func (s StringSlice) Remove(toRemove interface{}) Interface {
 	return s
 }
 
-func Remove(data Interface, comp interface{}) Interface {
+func Remove(data RemoveInterface, comp interface{}) RemoveInterface {
 	n := data.Len()
 	toRemove := []int{}
 	for i := 0; i < n; i++ {
@@ -89,7 +89,7 @@ func Remove(data Interface, comp interface{}) Interface {
 	return data.Remove(toRemove)
 }
 
-func RemoveN(data Interface, comp interface{}, num int) Interface {
+func RemoveN(data RemoveInterface, comp interface{}, num int) RemoveInterface {
 	n := data.Len()
 	toRemove := []int{}
 	cnt := 0
